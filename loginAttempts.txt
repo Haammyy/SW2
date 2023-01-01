@@ -1,0 +1,15 @@
+Username: daf Password:  Time attempted: 2022-11-08T12:37:28.893006800 Status: Error:Access denied for user 'daf'@'localhost' (using password: NO)
+Username: daf Password: fda Time attempted: 2022-11-08T12:41:41.589347500 Status: Error:Access denied for user 'daf'@'localhost' (using password: YES)
+Username: daf2 Password: fda Time attempted: 2022-11-08T12:41:56.698583400 Status: Error:Access denied for user 'daf2'@'localhost' (using password: YES)
+Username: daf2 Password: Passw0rd! Time attempted: 2022-11-08T12:42:24.328852 Status: Error:Access denied for user 'daf2'@'localhost' (using password: YES)
+Username: sqlUser Password: Passw0rd! Time attempted: 2022-11-08T12:42:36.856602900 Status: Connection successful!
+Username:  Password:  Time attempted: 2022-11-08T13:07:11.753780700 Status: Error:Access denied for user ''@'localhost' (using password: NO)
+Username: sqlUser Password: Passw0rd! Time attempted: 2022-11-08T14:46:35.314515300 Status: Connection successful!
+Username: sqlUser Password: Passw0rd! Time attempted: 2022-11-08T14:46:38.644125 Status: Connection successful!
+Username:  Password:  Time attempted: 2022-11-08T15:09:44.367709200 Status: Error:Access denied for user ''@'localhost' (using password: NO)
+Username: sqlUser Password: Passw0rd! Time attempted: 2022-11-08T15:10:09.355508500 Status: Connection successful!
+Username: sqlUser Password: Passw0rd! Time attempted: 2022-11-08T15:10:45.322528800 Status: Connection successful!
+Username: sqlUser Password: Passw0rd! Time attempted: 2022-11-08T15:11:59.862083 Status: Connection successful!
+Username: sqlUser Password: Passw0rd! Time attempted: 2022-11-08T15:16:45.852503600 Status: Connection successful!
+Username:  Password:  Time attempted: 2022-11-08T15:17:05.200362700 Status: Error:Access denied for user ''@'localhost' (using password: NO)
+Username: sqlUser Password: Passw0rd! Time attempted: 2022-11-08T15:17:23.532809200 Status: Connection successful!

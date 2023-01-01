@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox alignment="CENTER" prefHeight="546.0" prefWidth="747.0" spacing="20.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.scheduleViewController">
+    <padding>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+    </padding>
+   <children>
+      <VBox alignment="CENTER" prefHeight="673.0" prefWidth="707.0" spacing="20.0">
+         <padding>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+         </padding>
+         <children>
+            <Label prefHeight="20.0" prefWidth="155.0" text="Scheduling System">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+               <VBox.margin>
+                  <Insets right="485.0" />
+               </VBox.margin>
+            </Label>
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Label text="Customers" />
+               </children>
+            </HBox>
+            <TableView fx:id="customersTableView" prefHeight="200.0" prefWidth="667.0">
+              <columns>
+                <TableColumn fx:id="idColumn" prefWidth="75.0" text="ID" />
+                <TableColumn fx:id="nameColumn" prefWidth="131.1999969482422" text="Name" />
+                  <TableColumn fx:id="addressColumn" prefWidth="92.60002136230469" text="Address" />
+                  <TableColumn fx:id="postalCodeColumn" prefWidth="99.0" text="Postal Code" />
+                  <TableColumn fx:id="phoneNumberColumn" prefWidth="98.60003662109375" text="Phone" />
+                  <TableColumn fx:id="divisionColumn" prefWidth="104.20001220703125" text="Division ID" />
+              </columns>
+            </TableView>
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Button fx:id="addAppointmentButton" alignment="CENTER_RIGHT" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#addAppointment" text="Add Appointment">
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button fx:id="addCustomerButton" alignment="CENTER_RIGHT" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#addCustomer" text="Add Customer">
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button fx:id="updateCustomerButton" alignment="CENTER_RIGHT" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#updateCustomer" text="Update Customer">
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button fx:id="deleteCustomerButton" alignment="CENTER_RIGHT" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#deleteCustomer" text="Delete Customer">
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+               <padding>
+                  <Insets left="200.0" />
+               </padding>
+            </HBox>
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Label text="Appointments" />
+               </children>
+            </HBox>
+            <TableView fx:id="appointmentsTableView" prefHeight="200.0" prefWidth="667.0">
+               <columns>
+                  <TableColumn fx:id="appointmentIDColumn" prefWidth="52.19999313354492" text="Appointment_ID" />
+                  <TableColumn fx:id="titleColumn" prefWidth="61.20000457763672" text="Title" />
+                  <TableColumn fx:id="customerIDColumn" prefWidth="65.19999694824219" text="Customer_ID" />
+                  <TableColumn fx:id="contactIDColumn" minWidth="6.20001220703125" prefWidth="61.99998474121094" text="Contact_ID" />
+                  <TableColumn fx:id="descriptionColumn" prefWidth="88.0" text="Description" />
+                  <TableColumn fx:id="locationColumn" prefWidth="76.19998168945312" text="Location" />
+                  <TableColumn fx:id="typeColumn" prefWidth="93.39996337890625" text="Type" />
+                  <TableColumn fx:id="startColumn" prefWidth="108.20001220703125" text="Start" />
+                  <TableColumn fx:id="endColumn" prefWidth="75.0" text="End" />
+               </columns>
+            </TableView>
+         </children>
+      </VBox>
+      <HBox prefHeight="100.0" prefWidth="200.0">
+         <children>
+            <Button fx:id="updateAppointmentButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#updateAppointment" text="Update Appointment" textAlignment="CENTER">
+               <HBox.margin>
+                  <Insets left="250.0" />
+               </HBox.margin></Button>
+            <Button fx:id="deleteAppointmentButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#deleteAppointment" text="Delete Appointment" textAlignment="CENTER">
+               <HBox.margin>
+                  <Insets left="20.0" />
+               </HBox.margin></Button>
+            <Button fx:id="reportsButton" mnemonicParsing="false" onAction="#reportsClicked" text="Reports" />
+         </children>
+      </HBox>
+      <HBox prefHeight="100.0" prefWidth="200.0" />
+   </children>
+</VBox>
