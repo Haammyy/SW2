@@ -2,6 +2,7 @@ package controllers;
 import Model.Appointments;
 import Model.Customers;
 import Model.Divisions;
+import helper.AppointmentsQuery;
 import helper.Conversions;
 import helper.CustomersQuery;
 import helper.DivisionsQuery;
@@ -135,8 +136,23 @@ public class scheduleViewController {
         window.show();
     }
     public void deleteAppointment(ActionEvent event) throws IOException, SQLException {
-        System.out.println("delete appointment clicked");
-        initialize();
+        if (appointmentsTableView.getSelectionModel().getSelectedItem() == null) {
+            Conversions.toAlert("Please select an item to modify");
+            throw new IOException();
+        }
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Delete " + appointmentsTableView.getSelectionModel().getSelectedItem().getAppointment_ID() + " from table?", ButtonType.YES, ButtonType.CANCEL);
+        alert.showAndWait();
+
+        if (alert.getResult() == ButtonType.YES) {
+            System.out.println("Delete button Pressed");
+            AppointmentsQuery.deleteAppointment(appointmentsTableView.getSelectionModel().getSelectedItem().getAppointment_ID());
+            appointmentsTableView.getItems().clear();
+            AppointmentsQuery.getAppointmentsTable();
+            appointmentList = Appointments.getAllAppointments();
+            appointmentsTableView.setItems(appointmentList);
+
+            //appointments.getAllappointments();
+        }
     }
     public void reportsClicked(ActionEvent event) throws IOException{
         System.out.println("reports clicked");

@@ -265,3 +265,13 @@ Username: sqlUser Password: Passw0rd! Time attempted: 2022-12-29T11:10:58.321336
 Username: sqlUser Password: Passw0rd! Time attempted: 2022-12-29T11:15:57.995875900 Status: Connection successful!
 Username: sqlUser Password: Passw0rd! Time attempted: 2022-12-29T11:20:49.002980600 Status: Connection successful!
 Username: sqlUser Password: Passw0rd! Time attempted: 2023-01-01T15:05:14.983930900 Status: Connection successful!
+Username: sqlUser Password: Passw0rd! Time attempted: 2023-01-02T14:04:52.415383900 Status: Error:com.mysql.cj.jdbc.Driver
+Username: sqlUser Password: Passw0rd! Time attempted: 2023-01-02T15:32:20.802546600 Status: Error:com.mysql.cj.jdbc.Driver
+Username: sqlUser Password: Passw0rd! Time attempted: 2023-01-02T17:25:36.593884700 Status: Error:com.mysql.cj.jdbc.Driver
+Username: sqlUser Password: Passw0rd! Time attempted: 2023-01-02T17:49:38.400666100 Status: Error:com.mysql.cj.jdbc.Driver
+Username: sqlUser Password: Passw0rd! Time attempted: 2023-01-02T17:50:20.486710800 Status: Connection successful!
+Username: sqlUser Password: Passw0rd! Time attempted: 2023-01-10T10:45:34.797210900 Status: Connection successful!
+Username: sqlUser Password: Passw0rd! Time attempted: 2023-01-10T10:49:28.176303300 Status: Connection successful!
+Username: sqlUser Password: Passw0rd! Time attempted: 2023-02-25T11:18:08.951121900 Status: Connection successful!
+Username: sqlUser Password: Passw0rd! Time attempted: 2023-03-05T08:43:04.562205500 Status: Connection successful!
+Username: sqlUser Password: Passw0rd! Time attempted: 2023-03-05T08:55:02.170130300 Status: Connection successful!

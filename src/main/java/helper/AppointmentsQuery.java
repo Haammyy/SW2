@@ -12,6 +12,13 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 public class AppointmentsQuery {
+    public static int deleteAppointment(int selectedAppointment) throws  SQLException{
+        String sql = "DELETE FROM appointments WHERE Appointment_ID = ?";
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        ps.setInt(1, selectedAppointment);
+        int rowsAffected = ps.executeUpdate();
+        return rowsAffected;
+    }
 
     public static void getAppointmentsTable() throws SQLException {
         int Appointment_ID, customerId, userId, contactId;
