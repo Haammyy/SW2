@@ -7,12 +7,20 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class DivisionsQuery {
+    /**
+     * getDivision will pull the Division table, and turn it into a Java Object.
+     * @return
+     * @throws SQLException
+     */
     public ObservableList<Divisions> getDivisions() throws SQLException {
         ObservableList<Divisions> divisions = FXCollections.observableArrayList();
         String sql = "SELECT * from first_level_divisions";
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
         try {
             ResultSet rs = ps.executeQuery();
+            /**
+             * While the result set has remaining iterables, continue creating new Division Objects.
+             */
             while (rs.next()) {
                 Divisions newDivision = new Divisions(
                         rs.getInt("Division_ID"),

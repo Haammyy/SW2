@@ -21,10 +21,14 @@ import java.util.ResourceBundle;
 
 import static helper.Conversions.toAlert;
 
-
+/**
+ * This is the login form that will grant access to the application
+ */
 public class HelloController {
+
     String fileName = "src\\main\\resources\\loginAttempts.txt";
 
+    //boolean variables to determine what language to display
     public boolean isEnglish = false;
     public boolean isFrench = false;
 
@@ -38,12 +42,15 @@ public class HelloController {
     @FXML private Button logInButton;
 
 
+    /**
+     * print the login attempt information to loginAttempts.txt
+     * @param event
+     * @throws IOException
+     * @throws SQLException
+     */
     @FXML
     protected void onLoginClick(ActionEvent event) throws IOException, SQLException {
-
         BufferedWriter out = null;
-
-        //welcomeText.setText(JDBC.openConnection(userName.getText(),passWord.getText()));
         String toAppend = "\nUsername: " + userName.getText() + " Password: " + passWord.getText() + " Time attempted: " + LocalDateTime.now(zoneId)+ " Status: "+ JDBC.openConnection(userName.getText(),passWord.getText());
         try {
             out = new BufferedWriter(new FileWriter(fileName,true));
@@ -52,6 +59,8 @@ public class HelloController {
         } catch (IOException e) {
             System.out.println("exception occurred"+ e);
         }
+
+        //check to see if the username and password match the MySQL credentials. If true, change the scene. If false, alert.
         if(JDBC.openConnection(userName.getText(),passWord.getText()).equals("Connection successful!")){
             System.out.println("login clicked");
             CustomersQuery.getCustomerTable();
@@ -70,7 +79,11 @@ public class HelloController {
 
     }
 
+    /**
+     * this will set the language based upon the locale of the user's windows settings.
+     */
     public void initialize(){
+
         //testing only:::::::::::::::::::::::::::::
         userName.setText("sqlUser");
         passWord.setText("Passw0rd!");

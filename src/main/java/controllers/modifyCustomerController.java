@@ -21,15 +21,30 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.sql.SQLException;
 
+import static controllers.scheduleViewController.selectedCustomer;
+
 public class modifyCustomerController {
     @FXML public Button saveCustomer, cancelCustomer;
     @FXML public TextField nameField, phoneField, addressField, postalField;
     @FXML public ComboBox<String> countryMenu;
     @FXML public ComboBox<String> stateMenu;
 
+    String currentState = DivisionsQuery.getDivisionNameByDivisionID(selectedCustomer.getDivisionId());
 
+    public modifyCustomerController() throws SQLException {
+    }
+
+    public void goHome(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/scheduleView.fxml"));
+        Parent viewParent = loader.load();
+        Scene viewScene = new Scene(viewParent);
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        window.setTitle("");
+        window.setScene(viewScene);
+        window.show();
+    }
     /**
-     * Save button clicked, save a new object, go home
+     * Save button clicked, save a new object (if all fields are full), then go home
      * @param event
      * @throws IOException
      * @throws SQLException
@@ -44,19 +59,15 @@ public class modifyCustomerController {
             Conversions.toAlert("No fields may be empty to create a new customer");
             throw new IOException();
         }
-        CustomersQuery.createCustomer(nameField.getText(),
+        CustomersQuery.updateCustomer(
+                selectedCustomer.getCustomerId(),
+                nameField.getText(),
                 addressField.getText(),
                 postalField.getText(),
                 phoneField.getText(),
-                Divisions.getDivisionByName(stateMenu.getSelectionModel().getSelectedItem()));
+                currentState);
         System.out.println("save customer clicked");
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/scheduleView.fxml"));
-        Parent viewParent = loader.load();
-        Scene viewScene = new Scene(viewParent);
-        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        window.setTitle("");
-        window.setScene(viewScene);
-        window.show();
+        goHome(event);
     }
 
 
@@ -67,24 +78,28 @@ public class modifyCustomerController {
      */
     public void cancelCustomerClicked(ActionEvent event) throws IOException{
         System.out.println("cancel customer clicked");
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/scheduleView.fxml"));
-        Parent viewParent = loader.load();
-        Scene viewScene = new Scene(viewParent);
-        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        window.setTitle("");
-        window.setScene(viewScene);
-        window.show();
+        goHome(event);
     }
 
+    /**
+     * Query the database, set the Countries fields with Strings of all countries.
+     * @throws SQLException
+     */
     private void setDivCombo() throws SQLException {
         countryMenu.setItems(CountriesQuery.getCountryName());
     }
 
+    /**
+     * When a country button is clicked, fill the divisions menu with corresponding data from the database.
+     * @param event
+     * @throws IOException
+     */
     public void onCountryClicked(ActionEvent event) throws IOException{
-
+        stateMenu.setPromptText("");
         System.out.println(countryMenu.getSelectionModel().getSelectedItem());
         ObservableList<String> divList = (Divisions.getAllDivisions(countryMenu.getSelectionModel().getSelectedItem()));
         System.out.println("state menu clicked");
+
         for(int i = 0 ; divList.size()>i ; i++){
             System.out.println(divList.get(i));
         }
@@ -92,7 +107,9 @@ public class modifyCustomerController {
         // If a new country is selected...
         if (countryMenu.getSelectionModel().getSelectedItem() != null) {
             // Clear the existing items in the division combobox
-            stateMenu.getItems().clear();
+            if(stateMenu!=null){
+                stateMenu.getItems().clear();
+            }
             // Add the divisions to the division combobox
             stateMenu.setItems(divList);
 
@@ -101,14 +118,12 @@ public class modifyCustomerController {
 
     public void initialize() throws SQLException {
         setDivCombo();
-        countryMenu.setPromptText(CountriesQuery.getCountryNameByCountryID(scheduleViewController.selectedCustomer.getDivisionId()));
-        stateMenu.setPromptText(DivisionsQuery.getDivisionNameByDivisionID(scheduleViewController.selectedCustomer.getDivisionId()));
-        System.out.println(scheduleViewController.selectedCustomer.getCountry());
-        stateMenu.setItems((Divisions.getAllDivisions(scheduleViewController.selectedCustomer.getCountry())));
-        nameField.setText(scheduleViewController.selectedCustomer.getCustomerName());
-        phoneField.setText(scheduleViewController.selectedCustomer.getPhoneNumber());
-        addressField.setText(scheduleViewController.selectedCustomer.getAddress());
-        postalField.setText(scheduleViewController.selectedCustomer.getPostalCode());
+        countryMenu.setPromptText(CountriesQuery.getCountryNameByCountryID(selectedCustomer.getDivisionId()));
+        stateMenu.setPromptText(DivisionsQuery.getDivisionNameByDivisionID(selectedCustomer.getDivisionId()));
+        nameField.setText(selectedCustomer.getCustomerName());
+        phoneField.setText(selectedCustomer.getPhoneNumber());
+        addressField.setText(selectedCustomer.getAddress());
+        postalField.setText(selectedCustomer.getPostalCode());
 
     }
 }

@@ -24,7 +24,7 @@ import java.time.LocalDateTime;
 import static java.lang.Integer.parseInt;
 public class scheduleViewController {
     //BUTTONS
-    @FXML private Button addAppointmentButton,addCustomerButton,updateCustomerButton,deleteCustomerButton,updateAppointmentButton,deleteAppointmentButton;
+    @FXML private Button reportsButton,addAppointmentButton,addCustomerButton,updateCustomerButton,deleteCustomerButton,updateAppointmentButton,deleteAppointmentButton;
 
     //CUSTOMER TABLE
     @FXML public TableView<Customers> customersTableView;
@@ -57,6 +57,19 @@ public class scheduleViewController {
         Scene viewScene = new Scene(viewParent);
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setTitle("Create Appointment");
+        window.setScene(viewScene);
+        window.show();
+    }
+
+    /**
+     * Go to the reports stack pane
+     */
+    public void reportsButtonClicked(ActionEvent event) throws IOException{
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/reportView.fxml"));
+        Parent viewParent = loader.load();
+        Scene viewScene = new Scene(viewParent);
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        window.setTitle("Reports");
         window.setScene(viewScene);
         window.show();
     }
@@ -150,8 +163,6 @@ public class scheduleViewController {
             AppointmentsQuery.getAppointmentsTable();
             appointmentList = Appointments.getAllAppointments();
             appointmentsTableView.setItems(appointmentList);
-
-            //appointments.getAllappointments();
         }
     }
     public void reportsClicked(ActionEvent event) throws IOException{

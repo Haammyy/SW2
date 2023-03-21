@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<VBox alignment="CENTER" prefHeight="546.0" prefWidth="747.0" spacing="20.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.scheduleViewController">
+<VBox alignment="CENTER" prefHeight="546.0" prefWidth="747.0" spacing="20.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.scheduleViewController">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
@@ -15,14 +15,20 @@
             <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
          </padding>
          <children>
-            <Label prefHeight="20.0" prefWidth="155.0" text="Scheduling System">
-               <font>
-                  <Font name="System Bold" size="14.0" />
-               </font>
-               <VBox.margin>
-                  <Insets right="485.0" />
-               </VBox.margin>
-            </Label>
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Label prefHeight="20.0" prefWidth="155.0" text="Scheduling System">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <Button fx:id="reportsButton" alignment="CENTER" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#reportsClicked" prefHeight="42.0" prefWidth="115.0" text="Reports">
+                     <HBox.margin>
+                        <Insets left="390.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+            </HBox>
             <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
                   <Label text="Customers" />
@@ -95,7 +101,6 @@
                <HBox.margin>
                   <Insets left="20.0" />
                </HBox.margin></Button>
-            <Button fx:id="reportsButton" mnemonicParsing="false" onAction="#reportsClicked" text="Reports" />
          </children>
       </HBox>
       <HBox prefHeight="100.0" prefWidth="200.0" />

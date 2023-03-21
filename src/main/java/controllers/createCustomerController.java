@@ -2,10 +2,7 @@ package controllers;
 
 import Model.Countries;
 import Model.Divisions;
-import helper.Conversions;
-import helper.CountriesQuery;
-import helper.CustomersQuery;
-import helper.DivisionsQuery;
+import helper.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -50,13 +47,7 @@ public class createCustomerController {
                              phoneField.getText(),
                              Divisions.getDivisionByName(stateMenu.getSelectionModel().getSelectedItem()));
         System.out.println("save customer clicked");
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/scheduleView.fxml"));
-        Parent viewParent = loader.load();
-        Scene viewScene = new Scene(viewParent);
-        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        window.setTitle("");
-        window.setScene(viewScene);
-        window.show();
+        NavigationUtil.navigateToHomePage(event);
         }
 
 
@@ -67,13 +58,7 @@ public class createCustomerController {
      */
     public void cancelCustomerClicked(ActionEvent event) throws IOException{
         System.out.println("cancel customer clicked");
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/scheduleView.fxml"));
-        Parent viewParent = loader.load();
-        Scene viewScene = new Scene(viewParent);
-        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        window.setTitle("");
-        window.setScene(viewScene);
-        window.show();
+        NavigationUtil.navigateToHomePage(event);
     }
 
     private void setDivCombo() throws SQLException {
@@ -86,10 +71,10 @@ public class createCustomerController {
 
 
     public void onCountryClicked(ActionEvent event) throws IOException{
-
             System.out.println(countryMenu.getSelectionModel().getSelectedItem());
             ObservableList<String> divList = (Divisions.getAllDivisions(countryMenu.getSelectionModel().getSelectedItem()));
             System.out.println("state menu clicked");
+
             for(int i = 0 ; divList.size()>i ; i++){
                 System.out.println(divList.get(i));
             }

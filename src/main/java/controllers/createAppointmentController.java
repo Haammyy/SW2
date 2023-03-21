@@ -12,8 +12,16 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class createAppointmentController {
+
+    //save appointment & cancel appointment FXML Button objects:
     @FXML public Button saveAppointment, cancelAppointment;
 
+
+    /**
+     * saveAppointment method handles when the save button is clicked within the "create Appointment" window
+     * @param event
+     * @throws IOException
+     */
     public void saveAppointmentClicked(ActionEvent event) throws IOException {
 
         //set scene to go home
@@ -26,6 +34,12 @@ public class createAppointmentController {
         window.setScene(viewScene);
         window.show();
     }
+
+    /**
+     * cancelAppointment method handles when the cancel button is clicked within the "createAppointment" window
+     * @param event
+     * @throws IOException
+     */
     public void cancelAppointmentClicked(ActionEvent event) throws IOException{
         System.out.println("cancel appointment clicked");
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/scheduleView.fxml"));
@@ -36,6 +50,10 @@ public class createAppointmentController {
         window.setScene(viewScene);
         window.show();
     }
+
+    /**
+     * initialize runs every time the window is created
+     */
     public void initialize(){
         
     }
