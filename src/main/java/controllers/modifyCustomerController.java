@@ -5,6 +5,7 @@ import helper.Conversions;
 import helper.CountriesQuery;
 import helper.CustomersQuery;
 import helper.DivisionsQuery;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -50,6 +51,9 @@ public class modifyCustomerController {
      * @throws SQLException
      */
     public void saveCustomerClicked(ActionEvent event) throws IOException, SQLException {
+        System.out.println("***\nDATA SUPPOSED TO BE UPDATED: \n"+phoneField.getText()+"\n"+nameField.getText()+"\n"+addressField.getText()+"\n"+postalField.getText()+"\n"+currentState+selectedCustomer.getCustomerId()+"\n***");
+
+
         if (    phoneField   == null ||
                 nameField    == null ||
                 addressField == null ||
@@ -65,7 +69,7 @@ public class modifyCustomerController {
                 addressField.getText(),
                 postalField.getText(),
                 phoneField.getText(),
-                currentState);
+                stateMenu.getValue());
         System.out.println("save customer clicked");
         goHome(event);
     }
@@ -95,6 +99,8 @@ public class modifyCustomerController {
      * @throws IOException
      */
     public void onCountryClicked(ActionEvent event) throws IOException{
+        countryMenu.setValue(countryMenu.getValue());
+
         stateMenu.setPromptText("");
         System.out.println(countryMenu.getSelectionModel().getSelectedItem());
         ObservableList<String> divList = (Divisions.getAllDivisions(countryMenu.getSelectionModel().getSelectedItem()));
@@ -107,9 +113,7 @@ public class modifyCustomerController {
         // If a new country is selected...
         if (countryMenu.getSelectionModel().getSelectedItem() != null) {
             // Clear the existing items in the division combobox
-            if(stateMenu!=null){
-                stateMenu.getItems().clear();
-            }
+            stateMenu.setItems(null);
             // Add the divisions to the division combobox
             stateMenu.setItems(divList);
 
@@ -118,8 +122,17 @@ public class modifyCustomerController {
 
     public void initialize() throws SQLException {
         setDivCombo();
+
+        //set the Country value
+        countryMenu.setValue(selectedCustomer.getCountry());
+
+        //set the prompt text of both menus
         countryMenu.setPromptText(CountriesQuery.getCountryNameByCountryID(selectedCustomer.getDivisionId()));
         stateMenu.setPromptText(DivisionsQuery.getDivisionNameByDivisionID(selectedCustomer.getDivisionId()));
+
+        stateMenu.setItems(Divisions.getAllDivisions(String.valueOf(CountriesQuery.getCountryNameByCountryID(selectedCustomer.getDivisionId()))));
+
+        //set the text fields for the rest of the fields
         nameField.setText(selectedCustomer.getCustomerName());
         phoneField.setText(selectedCustomer.getPhoneNumber());
         addressField.setText(selectedCustomer.getAddress());

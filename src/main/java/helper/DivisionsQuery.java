@@ -27,9 +27,6 @@ public class DivisionsQuery {
                         rs.getString("Division"),
                         rs.getInt("COUNTRY_ID")
                 );
-
-                System.out.println(newDivision.getDivisionId()+" "+newDivision.getDivision()+" "+ newDivision.getCountryId());
-
                 divisions.add(newDivision);
                 Divisions.setAllDivisions(newDivision);
             }

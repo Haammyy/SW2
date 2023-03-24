@@ -1,5 +1,6 @@
 package controllers;
 
+import helper.NavigationUtil;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -7,14 +8,28 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.SplitMenuButton;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import org.w3c.dom.events.UIEvent;
 
 import java.io.IOException;
 
 public class createAppointmentController {
 
     //save appointment & cancel appointment FXML Button objects:
-    @FXML public Button saveAppointment, cancelAppointment;
+    @FXML
+    public Button saveAppointment, cancelAppointment;
+    public DatePicker startDatePicker, endDatePicker;
+
+    public TextField customerIdField, userIdField, titleField, descriptionField;
+
+    public SplitMenuButton contactMenu, typeMenu,
+            startHourPicker, startMinutePicker, startSecondPicker,
+            endHourPicker, endMinutePicker, endSecondPicker;
+
+
 
 
     /**
@@ -24,15 +39,8 @@ public class createAppointmentController {
      */
     public void saveAppointmentClicked(ActionEvent event) throws IOException {
 
-        //set scene to go home
-        System.out.println("save appointment clicked");
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/scheduleView.fxml"));
-        Parent viewParent = loader.load();
-        Scene viewScene = new Scene(viewParent);
-        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        window.setTitle("");
-        window.setScene(viewScene);
-        window.show();
+
+        NavigationUtil.navigateToHomePage(event);
     }
 
     /**
@@ -41,14 +49,7 @@ public class createAppointmentController {
      * @throws IOException
      */
     public void cancelAppointmentClicked(ActionEvent event) throws IOException{
-        System.out.println("cancel appointment clicked");
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/scheduleView.fxml"));
-        Parent viewParent = loader.load();
-        Scene viewScene = new Scene(viewParent);
-        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        window.setTitle("");
-        window.setScene(viewScene);
-        window.show();
+        NavigationUtil.navigateToHomePage(event);
     }
 
     /**

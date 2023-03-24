@@ -181,8 +181,6 @@ public class scheduleViewController {
 
         customersTableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         customerList = Customers.getAllCustomers();
-        System.out.println("List of all "+customerList.size()+" customer objects: " + customerList);
-        //customersTableView.getItems().clear();
         customersTableView.setItems(customerList);
 
         idColumn.setCellValueFactory(new PropertyValueFactory<>("customerId"));
@@ -194,8 +192,6 @@ public class scheduleViewController {
 
         appointmentsTableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         appointmentList = Appointments.getAllAppointments();
-        System.out.println("List of all "+appointmentList.size()+" appointment objects: " + appointmentList);
-        //appointmentsTableView.getItems().clear();
         appointmentsTableView.setItems(appointmentList);
 
         appointmentIDColumn.setCellValueFactory(new PropertyValueFactory<>("Appointment_ID"));

@@ -25,18 +25,18 @@ public class CustomersQuery {
      * @throws SQLException
      */
     public static boolean createCustomer(String name, String address, String postalCode, String phone, int division) throws SQLException{
+        try{
+            String sql = "INSERT INTO customers(Customer_Name, Address, Postal_Code, Phone, Division_ID) VALUES (?, ?, ?, ?, ?)";
+            PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+            //ResultSet rs = ps.executeQuery();
 
-        String sql = "INSERT INTO customers(Customer_Name, Address, Postal_Code, Phone, Division_ID) VALUES (?, ?, ?, ?, ?)";
-        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
-        //ResultSet rs = ps.executeQuery();
-
-        ps.setString(1, name);
-        ps.setString(2, address);
-        ps.setString(3, postalCode);
-        ps.setString(4, phone);
-        ps.setInt(5, division);
-        ps.execute();
-        //while (rs.next()){
+            ps.setString(1, name);
+            ps.setString(2, address);
+            ps.setString(3, postalCode);
+            ps.setString(4, phone);
+            ps.setInt(5, division);
+            ps.execute();
+            //while (rs.next()){
             if (ps.getUpdateCount() > 0) {
                 Customers.getAllCustomers().clear();
                 getCustomerTable();
@@ -44,9 +44,16 @@ public class CustomersQuery {
             }
             else {System.out.println("No change");}
 
-        //}
+            //}
 
-        return true;
+            return true;
+
+        }
+        catch (Exception e ){
+            Conversions.toAlert("could not add this customer, double check format");
+            throw new RuntimeException(e);
+        }
+
     }
 
     /**
@@ -91,8 +98,7 @@ public class CustomersQuery {
      * @throws SQLException
      */
     public static boolean updateCustomer(int customerId, String name, String address, String postalCode, String phone, String division) throws SQLException {
-        //Division newDivision = DivisionQuery.getDivisionId(division);
-        System.out.println(customerId);
+    try{
         String sql = "UPDATE customers SET Customer_Name=?, Address=?, Postal_Code=?, Phone=?, Division_ID=? WHERE Customer_ID=?";
 
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
@@ -102,13 +108,19 @@ public class CustomersQuery {
         ps.setString(2, address);
         ps.setString(3, postalCode);
         ps.setString(4, phone);
-        ps.setInt(5, Integer.parseInt(division));
+        ps.setInt(5, (Divisions.getDivisionByName(division)));
         ps.setInt(6, customerId);
+
         ps.execute();
         Customers.getAllCustomers().clear();
         getCustomerTable();
         return true;
-    }
+
+    } catch (Exception e) {
+        Conversions.toAlert("Customer could not be updated");
+        throw new RuntimeException(e);
+    }}
+
 
     /**
      * REMOVES THE DELETED CUSTOMER FROM THE SERVER
@@ -116,11 +128,18 @@ public class CustomersQuery {
      * @return
      * @throws SQLException
      */
-    public static int deleteCustomer(int selectedCustomerID) throws  SQLException{
-        String sql = "DELETE FROM customers WHERE customer_ID = ?";
-        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
-        ps.setInt(1, selectedCustomerID);
-        int rowsAffected = ps.executeUpdate();
-        return rowsAffected;
+    public static int deleteCustomer(int selectedCustomerID) throws  SQLException {
+        try {
+            String sql = "DELETE FROM customers WHERE customer_ID = ?";
+            PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+            ps.setInt(1, selectedCustomerID);
+            int rowsAffected = ps.executeUpdate();
+            System.out.println("CUSTOMER SUCCESSFULLY REMOVED: "+ selectedCustomerID);
+            return rowsAffected;
+        } catch (Exception e) {
+            Conversions.toAlert("customer could not be removed");
+            throw new RuntimeException(e);
+        }
     }
-}
+    }
+

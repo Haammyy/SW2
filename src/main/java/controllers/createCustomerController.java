@@ -71,9 +71,8 @@ public class createCustomerController {
 
 
     public void onCountryClicked(ActionEvent event) throws IOException{
-            System.out.println(countryMenu.getSelectionModel().getSelectedItem());
+            //System.out.println(countryMenu.getSelectionModel().getSelectedItem());
             ObservableList<String> divList = (Divisions.getAllDivisions(countryMenu.getSelectionModel().getSelectedItem()));
-            System.out.println("state menu clicked");
 
             for(int i = 0 ; divList.size()>i ; i++){
                 System.out.println(divList.get(i));
