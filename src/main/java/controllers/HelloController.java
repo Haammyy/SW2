@@ -1,4 +1,5 @@
 package controllers;
+import Model.Location;
 import helper.AppointmentsQuery;
 import helper.CustomersQuery;
 import helper.JDBC;
@@ -83,17 +84,42 @@ public class HelloController {
      * this will set the language based upon the locale of the user's windows settings.
      */
     public void initialize(){
+        Location location = new Location();
+
 
         //testing only:::::::::::::::::::::::::::::
         userName.setText("sqlUser");
         passWord.setText("Passw0rd!");
         //:::::::::::::::::::::::::::::::::::::::::
-        rs = ResourceBundle.getBundle("lang", Locale.getDefault());
 
-        if (Locale.getDefault().getLanguage().equals("fr")||Locale.getDefault().getLanguage().equals("en")) {
-            logInButton.setText(rs.getString("login"));
-            userName.setPromptText(rs.getString("username"));
-            passWord.setPromptText(rs.getString("password"));
-            //localeLabel.setText(rs.getString("localeLabel"));
+        //set the language based upon the locale of the user's windows settings.
+        Locale locale = Locale.getDefault();
+        System.out.println(locale.getLanguage());
+        if(locale.getLanguage().equals("fr")){
+            isFrench = true;
+            isEnglish = false;
         }
-}}
+        else{
+            isEnglish = true;
+            isFrench = false;
+        }
+
+        //set the resource bundle based upon the language
+        rs = ResourceBundle.getBundle("lang", Locale.ENGLISH);
+
+        if(isFrench){
+            rs = ResourceBundle.getBundle("lang", Locale.FRENCH);
+        }
+
+        //set locale label to the location of the user from Location method
+        localeLabel.setText(location.getUserLocation());
+
+        //set the text of the labels and buttons based upon the language
+        logInButton.setText(rs.getString("login"));
+        userName.setPromptText(rs.getString("username"));
+        passWord.setPromptText(rs.getString("password"));
+
+
+
+    }
+}

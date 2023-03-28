@@ -1,5 +1,6 @@
 package controllers;
 
+import Model.Appointments;
 import helper.NavigationUtil;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -15,6 +16,8 @@ import javafx.stage.Stage;
 import org.w3c.dom.events.UIEvent;
 
 import java.io.IOException;
+
+import static java.lang.Integer.parseInt;
 
 public class createAppointmentController {
 
@@ -38,8 +41,6 @@ public class createAppointmentController {
      * @throws IOException
      */
     public void saveAppointmentClicked(ActionEvent event) throws IOException {
-
-
         NavigationUtil.navigateToHomePage(event);
     }
 
@@ -50,6 +51,16 @@ public class createAppointmentController {
      */
     public void cancelAppointmentClicked(ActionEvent event) throws IOException{
         NavigationUtil.navigateToHomePage(event);
+    }
+
+    public void onContactMenuClicked(ActionEvent event) throws IOException{
+        //create an arrayList of contacts, then populate the menu with the contacts
+        //when a contact is clicked, set the contactMenu text to the contact name
+
+
+
+
+
     }
 
     /**

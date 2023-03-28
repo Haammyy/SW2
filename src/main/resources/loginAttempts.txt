@@ -58,3 +58,12 @@ Username: sqlUser Password: Passw0rd! Time attempted: 2023-03-23T09:12:26.551495
 Username: sqlUser Password: Passw0rd! Time attempted: 2023-03-23T09:26:46.866234800 Status: Connection successful!
 Username: sqlUser Password: Passw0rd! Time attempted: 2023-03-23T09:30:10.647488800 Status: Connection successful!
 Username: sqlUser Password: Passw0rd! Time attempted: 2023-03-23T09:40:43.924490500 Status: Connection successful!
+Username: sqlUser Password: Passw0rd! Time attempted: 2023-03-23T19:16:23.714585600 Status: Connection successful!
+Username: sqlUser Password: Passw0rd! Time attempted: 2023-03-26T11:06:37.432814500 Status: Connection successful!
+Username: sqlUser Password: Passw0rd! Time attempted: 2023-03-26T11:15:05.296507600 Status: Connection successful!
+Username: sqlUser Password: Passw0rd! Time attempted: 2023-03-26T11:16:38.684574 Status: Connection successful!
+Username: sqlUser Password: Passw0rd! Time attempted: 2023-03-27T14:19:15.674019400 Status: Connection successful!
+Username: sqlUser Password: Passw0rd! Time attempted: 2023-03-27T14:23:19.649738200 Status: Connection successful!
+Username: sqlUser Password: Passw0rd! Time attempted: 2023-03-27T16:56:39.503244800 Status: Connection successful!
+Username: sqlUser Password: Passw0rd! Time attempted: 2023-03-27T16:57:25.704556100 Status: Connection successful!
+Username: sqlUser Password: Passw0rd! Time attempted: 2023-03-27T17:03:10.159278100 Status: Connection successful!

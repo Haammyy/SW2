@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<VBox alignment="CENTER" prefHeight="400.0" style="-fx-background-color: #a0a0a0;" prefWidth="600.0" spacing="20.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.HelloController">
+<VBox alignment="CENTER" prefHeight="400.0" prefWidth="600.0" spacing="20.0" style="-fx-background-color: #a0a0a0;" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.HelloController">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
@@ -31,21 +31,12 @@
                <children>
                   <VBox prefHeight="36.0" prefWidth="130.0">
                      <children>
-                        <Label fx:id="welcomeText" text="Logged Out" />
                         <Label fx:id="localeLabel" prefHeight="18.0" prefWidth="137.0" text="LocaleInfo" textFill="RED">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font></Label>
                      </children>
                   </VBox>
-                  <Label alignment="CENTER_RIGHT" contentDisplay="BOTTOM" prefHeight="18.0" prefWidth="134.0" text="Label">
-                     <opaqueInsets>
-                        <Insets />
-                     </opaqueInsets>
-                     <HBox.margin>
-                        <Insets left="300.0" />
-                     </HBox.margin>
-                  </Label>
                </children>
                <VBox.margin>
                   <Insets />
