@@ -67,3 +67,4 @@ Username: sqlUser Password: Passw0rd! Time attempted: 2023-03-27T14:23:19.649738
 Username: sqlUser Password: Passw0rd! Time attempted: 2023-03-27T16:56:39.503244800 Status: Connection successful!
 Username: sqlUser Password: Passw0rd! Time attempted: 2023-03-27T16:57:25.704556100 Status: Connection successful!
 Username: sqlUser Password: Passw0rd! Time attempted: 2023-03-27T17:03:10.159278100 Status: Connection successful!
+Username: sqlUser Password: Passw0rd! Time attempted: 2023-03-30T15:20:50.837175700 Status: Connection successful!

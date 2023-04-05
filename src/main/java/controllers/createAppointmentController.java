@@ -1,6 +1,7 @@
 package controllers;
 
 import Model.Appointments;
+import helper.Conversions;
 import helper.NavigationUtil;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -41,8 +42,19 @@ public class createAppointmentController {
      * @throws IOException
      */
     public void saveAppointmentClicked(ActionEvent event) throws IOException {
+        //create a new appointment object using the field information from the window if the fields are not empty,make the hour, minute, and second fields constrained to the correct values of 0-23, 0-59, 0-59 make the date fields constrained to the correct values of 1-12, 1-31, 1-9999 make the customerId, userId, and contactId fields constrained to only accept integers make the title, description, and location fields constrained to only accept strings
+
+        //if the fields are empty, display an error message and do not save the appointment
+
+
+        //if the fields are not empty, save the appointment and navigate to the home page
         NavigationUtil.navigateToHomePage(event);
+
+
     }
+
+
+
 
     /**
      * cancelAppointment method handles when the cancel button is clicked within the "createAppointment" window

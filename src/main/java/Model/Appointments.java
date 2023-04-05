@@ -7,7 +7,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class Appointments {
-    public static ObservableList allAppointments = FXCollections.observableArrayList();
+    public static ObservableList<Appointments> allAppointments = FXCollections.observableArrayList();
 
     private int Appointment_ID,customerId,userId,contactId;
     private String title,description,location,type,contactName;

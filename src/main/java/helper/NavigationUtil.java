@@ -21,6 +21,7 @@ public class NavigationUtil {
             window.setScene(viewScene);
             window.show();
         } catch (IOException e) {
+            Conversions.toAlert("Error loading home page");
             e.printStackTrace();
         }
     }
