@@ -17,6 +17,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import org.w3c.dom.events.MouseEvent;
+
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
@@ -37,6 +39,10 @@ public class scheduleViewController {
     @FXML public TableColumn<Appointments, String> titleColumn, descriptionColumn, locationColumn, typeColumn;
     @FXML public TableColumn<Appointments, LocalDateTime> startColumn, endColumn;
 
+    //add radio buttons
+    @FXML private RadioButton monthlyAppointmentsRadioButton,weeklyAppointmentsRadioButton;
+
+
     //LISTS TO BE FILLED WITH TABLE DATA
     ObservableList customerList = FXCollections.observableArrayList();
     ObservableList appointmentList = FXCollections.observableArrayList();
@@ -51,6 +57,10 @@ public class scheduleViewController {
      * @throws IOException
      */
     public void addAppointment(ActionEvent event) throws IOException {
+        if (customersTableView.getSelectionModel().getSelectedItem() == null) {
+            Conversions.toAlert("Please select a customer");
+            throw new IOException();
+        }
         System.out.println("Create appointment clicked");
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/createAppointmentView.fxml"));
         Parent viewParent = loader.load();
@@ -65,6 +75,7 @@ public class scheduleViewController {
      * Go to the reports stack pane
      */
     public void reportsButtonClicked(ActionEvent event) throws IOException{
+
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/reportView.fxml"));
         Parent viewParent = loader.load();
         Scene viewScene = new Scene(viewParent);
@@ -72,6 +83,24 @@ public class scheduleViewController {
         window.setTitle("Reports");
         window.setScene(viewScene);
         window.show();
+    }
+
+    //change the appointment table to show monthly appointments
+    public void monthlyRadioClicked(ActionEvent event) throws IOException, SQLException {
+        System.out.println("Monthly appointments radio button clicked");
+        appointmentsTableView.getItems().clear();
+        //AppointmentsQuery.getMonthlyAppointments();
+        appointmentList = Appointments.getAllAppointments();
+        appointmentsTableView.setItems(appointmentList);
+    }
+
+    //change the appointment table to show weekly appointments
+    public void weeklyRadioClicked(ActionEvent event) throws IOException, SQLException {
+        System.out.println("Weekly appointments radio button clicked");
+        appointmentsTableView.getItems().clear();
+        //AppointmentsQuery.getWeeklyAppointments();
+        appointmentList = Appointments.getAllAppointments();
+        appointmentsTableView.setItems(appointmentList);
     }
 
     /**
@@ -175,6 +204,38 @@ public class scheduleViewController {
         window.setScene(viewScene);
         window.show();
     }
+    //make it so that double-clicking a customer takes you to the modify customer screen
+    public void customerClicked(javafx.scene.input.MouseEvent event) throws IOException {
+        //set the selected customer to the customer that was clicked
+        selectedCustomer = customersTableView.getSelectionModel().getSelectedItem();
+
+        if (event.getClickCount() == 2) {
+            System.out.println("double clicked");
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/modifyCustomerView.fxml"));
+            Parent viewParent = loader.load();
+            Scene viewScene = new Scene(viewParent);
+            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            window.setTitle("Modify Customer");
+            window.setScene(viewScene);
+            window.show();
+        }
+    }
+
+    public void appointmentClicked(javafx.scene.input.MouseEvent event) throws IOException {
+
+        if (event.getClickCount() == 2) {
+            selectedAppointment = appointmentsTableView.getSelectionModel().getSelectedItem();
+            System.out.println("double clicked");
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/modifyAppointmentView.fxml"));
+            Parent viewParent = loader.load();
+            Scene viewScene = new Scene(viewParent);
+            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            window.setTitle("Modify Appointment");
+            window.setScene(viewScene);
+            window.show();
+        }
+    }
+
     public void initialize() throws SQLException {
         DivisionsQuery divQue = new DivisionsQuery();
         divQue.getDivisions();
@@ -203,7 +264,8 @@ public class scheduleViewController {
         typeColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
         startColumn.setCellValueFactory(new PropertyValueFactory<>("startDate"));
         endColumn.setCellValueFactory(new PropertyValueFactory<>("endDate"));
-        contactIDColumn.setCellValueFactory(new PropertyValueFactory<>("contactId"));
+        //contactIDColumn.setCellValueFactory(new PropertyValueFactory<>("contactId"));
+
 
     }
 }

@@ -63,6 +63,19 @@ public class modifyCustomerController {
             Conversions.toAlert("No fields may be empty to create a new customer");
             throw new IOException();
         }
+        //check if all fields are identical to the selected customer, if so, return to home instead of updating the database
+
+        //this was not needed after fixing the bug where no value was assigned to the stateMenu
+
+//        if (    phoneField.getText().equals(selectedCustomer.getPhoneNumber()) &&
+//                nameField.getText().equals(selectedCustomer.getCustomerName()) &&
+//                addressField.getText().equals(selectedCustomer.getAddress()) &&
+//                postalField.getText().equals(selectedCustomer.getPostalCode()) &&
+//                countryMenu.getPromptText().equals(CountriesQuery.getCountryNameByCountryID(selectedCustomer.getDivisionId())) &&
+//                stateMenu.getPromptText().equals(DivisionsQuery.getDivisionNameByDivisionID(selectedCustomer.getDivisionId()))){
+//            goHome(event);
+//        }
+
         CustomersQuery.updateCustomer(
                 selectedCustomer.getCustomerId(),
                 nameField.getText(),
@@ -125,6 +138,7 @@ public class modifyCustomerController {
 
         //set the Country value
         countryMenu.setValue(selectedCustomer.getCountry());
+        stateMenu.setValue(DivisionsQuery.getDivisionNameByDivisionID(selectedCustomer.getDivisionId()));
 
         //set the prompt text of both menus
         countryMenu.setPromptText(CountriesQuery.getCountryNameByCountryID(selectedCustomer.getDivisionId()));

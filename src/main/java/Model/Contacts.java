@@ -1,7 +1,7 @@
 package Model;
 
 public class Contacts {
-    private int contactId;
+    private static int contactId;
     private String contactName,contactEmail;
 
     public Contacts(int contactId,
@@ -12,7 +12,7 @@ public class Contacts {
         this.contactEmail = contactEmail;
     }
 
-    public int getContactId() {
+    public static int getContactId() {
         return contactId;
     }
 

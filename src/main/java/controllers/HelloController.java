@@ -112,7 +112,7 @@ public class HelloController {
         }
 
         //set locale label to the location of the user from Location method
-        localeLabel.setText(location.getUserLocation());
+        localeLabel.setText(String.valueOf(ZoneId.systemDefault()));
 
         //set the text of the labels and buttons based upon the language
         logInButton.setText(rs.getString("login"));
