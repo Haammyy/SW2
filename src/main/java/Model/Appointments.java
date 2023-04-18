@@ -1,12 +1,17 @@
 package Model;
 
+import helper.ContactsQuery;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
+import java.util.ArrayList;
 
 public class Appointments {
+    public static ObservableList listOfAppointmentsFifteenMinutes = FXCollections.observableArrayList();
     public static ObservableList<Appointments> allAppointments = FXCollections.observableArrayList();
     private int Appointment_ID,customerId,userId,contactId;
     private String title,description,location,type,contactName;
@@ -37,6 +42,19 @@ public class Appointments {
         this.customerId = customerId;
         this.userId = userId;
         this.contactId = contactId;
+    }
+
+    public static boolean checkFifteen() {
+        //check to see if any appointment end dates are within 15 minutes of current time
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime fifteen = now.plusMinutes(15);
+        for (Appointments a : allAppointments) {
+            if (a.getEndTime().isAfter(now) && a.getEndTime().isBefore(fifteen)) {
+                listOfAppointmentsFifteenMinutes.add(a.getType()+ " with " + a.getContactId());
+                return true;
+            }
+        }
+        return false;
     }
 
     public void setAllAppointments(Appointments appointments){
@@ -151,4 +169,6 @@ public class Appointments {
     public void setEndTime(LocalDateTime endTime) {
         this.endTime = endTime;
     }
+
+
 }

@@ -2,6 +2,12 @@ package helper;
 
 import javafx.scene.control.Alert;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+
 public abstract class Conversions {
 
     public static Alert toAlert (String alertText){
@@ -12,21 +18,22 @@ public abstract class Conversions {
     }
 
     //localDateTime to UTC
-    public static String toUTC (String localDateTime){
-        String[] split = localDateTime.split("T");
-        String date = split[0];
-        String time = split[1];
-        String[] splitTime = time.split(":");
-        int hour = Integer.parseInt(splitTime[0]);
-        int minute = Integer.parseInt(splitTime[1]);
-        int second = Integer.parseInt(splitTime[2]);
-        hour = hour - 7;
-        if (hour < 0){
-            hour = hour + 24;
-        }
-        String newTime = hour + ":" + minute + ":" + second;
-        String newDateTime = date + " " + newTime;
-        return newDateTime;
+    public static String toUTC(String localDateTime) {
+        LocalDateTime dateTime = LocalDateTime.parse(localDateTime.replace(' ', 'T'));
+        ZonedDateTime localZoned = ZonedDateTime.of(dateTime, ZoneId.systemDefault());
+        ZonedDateTime utcZoned = localZoned.withZoneSameInstant(ZoneOffset.UTC);
+        //print the UTC time
+        System.out.println("UTC time: " + utcZoned.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+        //print the local time
+        System.out.println("local time: " + localZoned.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+        return utcZoned.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
     }
+    public static String fromUTC(String utcDateTime) {
+        LocalDateTime dateTime = LocalDateTime.parse(utcDateTime.replace(' ', 'T'));
+        ZonedDateTime utcZoned = ZonedDateTime.of(dateTime, ZoneOffset.UTC);
+        ZonedDateTime localZoned = utcZoned.withZoneSameInstant(ZoneId.systemDefault());
+        return localZoned.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+    }
+
 
 }

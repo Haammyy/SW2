@@ -1,4 +1,5 @@
 package controllers;
+import Model.Appointments;
 import Model.Location;
 import helper.AppointmentsQuery;
 import helper.CustomersQuery;
@@ -73,6 +74,13 @@ public class HelloController {
             window.setTitle("Schedule");
             window.setScene(viewScene);
             window.show();
+            if (Appointments.checkFifteen()) {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Appointment Approaching soon");
+                alert.setHeaderText("Appointment Alert");
+                alert.setContentText("You have an appointment(s) in less than 15 minutes\n"+Appointments.listOfAppointmentsFifteenMinutes);
+                alert.showAndWait();
+            }
         }
         else{
             toAlert("credentials are incorrect").show();

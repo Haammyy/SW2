@@ -2,10 +2,7 @@ package controllers;
 import Model.Appointments;
 import Model.Customers;
 import Model.Divisions;
-import helper.AppointmentsQuery;
-import helper.Conversions;
-import helper.CustomersQuery;
-import helper.DivisionsQuery;
+import helper.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -20,6 +17,7 @@ import javafx.stage.Stage;
 import org.w3c.dom.events.MouseEvent;
 
 import java.io.IOException;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 
@@ -35,7 +33,7 @@ public class scheduleViewController {
 
     //APPOINTMENT TABLE
     @FXML public TableView<Appointments> appointmentsTableView;
-    @FXML public TableColumn<Appointments, Integer> appointmentIDColumn,customerIDColumn, contactIDColumn;
+    @FXML public TableColumn<Appointments, Integer> appointmentIDColumn,customerIDColumn, userIDColumn;
     @FXML public TableColumn<Appointments, String> titleColumn, descriptionColumn, locationColumn, typeColumn;
     @FXML public TableColumn<Appointments, LocalDateTime> startColumn, endColumn;
 
@@ -89,16 +87,17 @@ public class scheduleViewController {
     public void monthlyRadioClicked(ActionEvent event) throws IOException, SQLException {
         System.out.println("Monthly appointments radio button clicked");
         appointmentsTableView.getItems().clear();
-        //AppointmentsQuery.getMonthlyAppointments();
+        AppointmentsQuery.getMonthlyAppointments();
         appointmentList = Appointments.getAllAppointments();
         appointmentsTableView.setItems(appointmentList);
     }
 
     //change the appointment table to show weekly appointments
     public void weeklyRadioClicked(ActionEvent event) throws IOException, SQLException {
+
         System.out.println("Weekly appointments radio button clicked");
         appointmentsTableView.getItems().clear();
-        //AppointmentsQuery.getWeeklyAppointments();
+        AppointmentsQuery.getWeeklyAppointments();
         appointmentList = Appointments.getAllAppointments();
         appointmentsTableView.setItems(appointmentList);
     }
@@ -126,12 +125,11 @@ public class scheduleViewController {
      * @throws IOException
      */
     public void updateCustomer(ActionEvent event) throws IOException {
-
+        selectedCustomer = customersTableView.getSelectionModel().getSelectedItem();
         if (customersTableView.getSelectionModel().getSelectedItem() == null) {
             Conversions.toAlert("Please select an item to modify");
             throw new IOException();
         }
-        selectedCustomer = customersTableView.getSelectionModel().getSelectedItem();
         System.out.println("update customer clicked");
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/modifyCustomerView.fxml"));
         Parent viewParent = loader.load();
@@ -153,7 +151,7 @@ public class scheduleViewController {
             Conversions.toAlert("Please select an item to modify");
             throw new IOException();
         }
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Delete " + customersTableView.getSelectionModel().getSelectedItem().getCustomerName() + " from table?", ButtonType.YES, ButtonType.CANCEL);
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Delete Customer: " + customersTableView.getSelectionModel().getSelectedItem().getCustomerName() + " from table?\nALL APPOINTMENTS ASSOCIATED WILL ALSO BE REMOVED", ButtonType.YES, ButtonType.CANCEL);
         alert.showAndWait();
 
         if (alert.getResult() == ButtonType.YES) {
@@ -163,11 +161,22 @@ public class scheduleViewController {
             CustomersQuery.getCustomerTable();
             customerList = Customers.getAllCustomers();
             customersTableView.setItems(customerList);
-
-            //Customers.getAllCustomers();
+            deleteAppointmentsForCustomer(selectedCustomer.getCustomerId());
+            //update the appointment table
+            appointmentsTableView.getItems().clear();
+            AllRadioClicked(event);
         }
     }
+    public static void deleteAppointmentsForCustomer(int customerId) throws SQLException {
+        String sql = "DELETE FROM appointments WHERE customer_id = ?";
+        try (PreparedStatement statement = JDBC.connection.prepareStatement(sql)) {
+            statement.setInt(1, customerId);
+            statement.executeUpdate();
+        }
+    }
+
     public void updateAppointment(ActionEvent event) throws IOException {
+        selectedAppointment = appointmentsTableView.getSelectionModel().getSelectedItem();
         System.out.println("update appointment clicked");
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/modifyAppointmentView.fxml"));
         Parent viewParent = loader.load();
@@ -182,7 +191,9 @@ public class scheduleViewController {
             Conversions.toAlert("Please select an item to modify");
             throw new IOException();
         }
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Delete " + appointmentsTableView.getSelectionModel().getSelectedItem().getAppointment_ID() + " from table?", ButtonType.YES, ButtonType.CANCEL);
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Delete Appointment #" +
+                appointmentsTableView.getSelectionModel().getSelectedItem().getAppointment_ID() +
+                " from table? \nThis is a "+ appointmentsTableView.getSelectionModel().getSelectedItem().getType() + " Meeting", ButtonType.YES, ButtonType.CANCEL);
         alert.showAndWait();
 
         if (alert.getResult() == ButtonType.YES) {
@@ -237,12 +248,15 @@ public class scheduleViewController {
     }
 
     public void initialize() throws SQLException {
+        appointmentsTableView.getItems().clear();
+
         DivisionsQuery divQue = new DivisionsQuery();
         divQue.getDivisions();
 
         customersTableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         customerList = Customers.getAllCustomers();
         customersTableView.setItems(customerList);
+
 
         idColumn.setCellValueFactory(new PropertyValueFactory<>("customerId"));
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("customerName"));
@@ -265,7 +279,22 @@ public class scheduleViewController {
         startColumn.setCellValueFactory(new PropertyValueFactory<>("startDate"));
         endColumn.setCellValueFactory(new PropertyValueFactory<>("endDate"));
         //contactIDColumn.setCellValueFactory(new PropertyValueFactory<>("contactId"));
+        userIDColumn.setCellValueFactory(new PropertyValueFactory<>("userId"));
+
+        AllRadioClicked(null);
 
 
     }
+
+    public void AllRadioClicked(ActionEvent actionEvent) throws SQLException {
+        appointmentsTableView.getItems().clear();
+        AppointmentsQuery.getAppointmentsTable();
+        appointmentList = Appointments.getAllAppointments();
+        for(int i = 0 ; i< appointmentList.size() ; i++){
+            //if the appointment at index i is not in the list, add it
+            if(!appointmentList.contains(appointmentList.get(i))){
+                appointmentList.add(appointmentList.get(i));
+            }
+        }}
+
 }

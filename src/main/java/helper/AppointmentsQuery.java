@@ -29,6 +29,10 @@ public class AppointmentsQuery {
         Contacts contact = ContactsQuery.getContactId(contactName);
 
         String sql = "INSERT INTO appointments(Title, Description, Location, Type, Start, End, Customer_ID, Contact_ID, User_ID) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";;
+
+        //print what should be created as sql statement
+        System.out.println(sql);
+
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
 
         ps.setString(1, title);
@@ -45,8 +49,8 @@ public class AppointmentsQuery {
             ps.execute();
             //while (rs.next()){
             if (ps.getUpdateCount() > 0) {
-                Customers.getAllCustomers().clear();
-                getCustomerTable();
+                Appointments.getAllAppointments().clear();
+                getAppointmentsTable();
                 System.out.println("Rows affected: " + ps.getUpdateCount());
             }
             else {System.out.println("No change");}
@@ -98,5 +102,135 @@ public class AppointmentsQuery {
     }
 
 
+    public static void getMonthlyAppointments() throws SQLException {
+        int Appointment_ID, customerId, userId, contactId;
+        String title,description, location, type,contactName;
+        LocalDate startDate;
+        LocalDateTime startTime;
+        LocalDate endDate;
+        LocalDateTime endTime;
+        String sql = "SELECT * FROM appointments WHERE MONTH(START) = MONTH(CURRENT_DATE())";
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        ResultSet rs = ps.executeQuery();
+        boolean hasResults = false;
 
+        while (rs.next()){
+            hasResults = true;
+            customerId = rs.getInt("Customer_ID");
+            Appointment_ID = rs.getInt("Appointment_ID");
+            userId = rs.getInt("User_ID");
+            contactId = rs.getInt("Contact_ID");
+            title = rs.getString("Title");
+            description = rs.getString("Description");
+            location = rs.getString("Location");
+            type = rs.getString("Type");
+            startDate = rs.getDate("Start").toLocalDate();
+            endDate = rs.getDate("End").toLocalDate();
+            startTime = rs.getTimestamp("Start").toLocalDateTime();
+            endTime = rs.getTimestamp("End").toLocalDateTime();
+            Appointments appointments = new Appointments(Appointment_ID, title, description,
+                    location, type, startDate, startTime, endDate, endTime, customerId, userId, contactId);
+            appointments.setAllAppointments(appointments);
+            if(!Appointments.allAppointments.contains(appointments)){
+                appointments.setAllAppointments(appointments);
+            }
+            if(!hasResults){
+                Conversions.toAlert("There are no appointments this month");
+            }
+        }
+
+    }
+
+    public static void getWeeklyAppointments() throws SQLException {
+        //set all appointments to the ones that are in the current week
+        Appointments.getAllAppointments().clear();
+        int Appointment_ID, customerId, userId, contactId;
+        String title,description, location, type,contactName;
+        LocalDate startDate;
+        LocalDateTime startTime;
+        LocalDate endDate;
+        LocalDateTime endTime;
+
+        String sql = "SELECT * FROM appointments WHERE WEEK(START) = WEEK(CURRENT_DATE())";
+        //print the data retrieved to the console
+        System.out.println(sql);
+
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        ResultSet rs = ps.executeQuery();
+
+        //print result set to console
+        System.out.println(rs);
+
+//        if (!rs.next()){
+//            Conversions.toAlert("There are no appointments this week");
+//        }
+        boolean hasResults = false;
+        while (rs.next()){
+            hasResults = true;
+            customerId = rs.getInt("Customer_ID");
+            Appointment_ID = rs.getInt("Appointment_ID");
+            userId = rs.getInt("User_ID");
+            contactId = rs.getInt("Contact_ID");
+            title = rs.getString("Title");
+            description = rs.getString("Description");
+            location = rs.getString("Location");
+            type = rs.getString("Type");
+            startDate = rs.getDate("Start").toLocalDate();
+            endDate = rs.getDate("End").toLocalDate();
+            startTime = rs.getTimestamp("Start").toLocalDateTime();
+            endTime = rs.getTimestamp("End").toLocalDateTime();
+            Appointments appointments = new Appointments(Appointment_ID, title, description,
+                    location, type, startDate, startTime, endDate, endTime, customerId, userId, contactId);
+            appointments.setAllAppointments(appointments);
+            if(!Appointments.allAppointments.contains(appointments)){
+                appointments.setAllAppointments(appointments);
+            }
+        if (!hasResults){
+            Conversions.toAlert("There are no appointments this week");
+        }
+        }
+
+    }
+
+    public static boolean updateAppointment(int contactID, String title, String description,
+                                            String location, String type, LocalDateTime start,
+                                            LocalDateTime end, int customerId, int userId, int appointmentId) throws SQLException {
+       try{
+           String sql =
+                   "UPDATE appointments SET Title = ?, " +
+                   "Description = ?, " +
+                   "Location = ?, " +
+                   "Type = ?, " +
+                   "Start = ?, " +
+                   "End = ?, " +
+                   "Customer_ID = ?," +
+                   " Contact_ID = ?," +
+                   " User_ID = ? " +
+                   "WHERE Appointment_ID = ?";
+           System.out.println(sql);
+           PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+           ps.setString(1, title);
+           ps.setString(2, description);
+           ps.setString(3, location);
+           ps.setString(4, type);
+           //set start and end times
+           ps.setTimestamp(5, Timestamp.valueOf(start));
+           ps.setTimestamp(6, Timestamp.valueOf(end));
+           //set the remaining values
+           ps.setInt(7, customerId);
+           ps.setInt(8, contactID);
+           ps.setInt(9, userId);
+           ps.setInt(10, appointmentId);
+           ps.executeUpdate();
+
+           Appointments.getAllAppointments().clear();
+           getAppointmentsTable();
+           return true;    }
+       catch (Exception e){
+            Conversions.toAlert("could not update this appointment, double check format");
+            throw new RuntimeException(e);
+        }
+
+
+    }
 }

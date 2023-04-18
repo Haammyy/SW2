@@ -1,6 +1,6 @@
 package Model;
 public class Users {
-    private int userId;
+    private static int userId;
     private String username;
     private String password;
     public Users (int userId,
@@ -11,7 +11,7 @@ public class Users {
         this.password = password;
     }
 
-    public int getUserId() {
+    public static int getUserId() {
         return userId;
     }
 

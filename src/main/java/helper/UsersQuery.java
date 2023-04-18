@@ -10,7 +10,6 @@ import java.sql.SQLException;
 
 public class UsersQuery {
 
-
     public static boolean checkCredentials(String user, String pass) throws SQLException {
         String sql = "SELECT * FROM users WHERE User_Name=? AND Password=?";
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
@@ -35,7 +34,6 @@ public class UsersQuery {
         try {
             ps.execute();
             ResultSet resultSet = ps.getResultSet();
-            ;
 
             while (resultSet.next()) {
                 Users newUser = new Users(
