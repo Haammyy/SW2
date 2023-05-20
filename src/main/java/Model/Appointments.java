@@ -1,16 +1,20 @@
 package Model;
 
 import helper.ContactsQuery;
+import helper.Conversions;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableArray;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Alert;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
+import java.util.List;
 
-public class Appointments {
+public class        Appointments {
     public static ObservableList listOfAppointmentsFifteenMinutes = FXCollections.observableArrayList();
     public static ObservableList<Appointments> allAppointments = FXCollections.observableArrayList();
     private int Appointment_ID,customerId,userId,contactId;
@@ -45,16 +49,29 @@ public class Appointments {
     }
 
     public static boolean checkFifteen() {
-        //check to see if any appointment end dates are within 15 minutes of current time
-        LocalDateTime now = LocalDateTime.now();
+        //check to see if any appointment end dates are within 15 minutes of current time, compared to the current time of the local machine
+        LocalDateTime now = Conversions.toUTC(LocalDateTime.now());
+        System.out.println(allAppointments.size() + " appointments in the list");
         LocalDateTime fifteen = now.plusMinutes(15);
-        for (Appointments a : allAppointments) {
-            if (a.getEndTime().isAfter(now) && a.getEndTime().isBefore(fifteen)) {
-                listOfAppointmentsFifteenMinutes.add(a.getType()+ " with " + a.getContactId());
+        System.out.println("A55: The time: "+ now +" compared to: "+fifteen);
+        for (int a = 0; a < allAppointments.size(); a++) {
+            if (Conversions.toUTC(allAppointments.get(a).getStartTime()).isAfter(Conversions.toUTC(now)) && (allAppointments.get(a).getStartTime()).isBefore(Conversions.toUTC(fifteen))) {
+                System.out.println(allAppointments.get(a).getAppointment_ID());
+                listOfAppointmentsFifteenMinutes.add(allAppointments.get(a).getType() + " with " + allAppointments.get(a).getContactId());
                 return true;
             }
         }
+        Conversions.toAlert("No appointments within 15 minutes");
         return false;
+    }
+    public static ObservableList<String> getFifteenAppointments() {
+        //
+        if (!listOfAppointmentsFifteenMinutes.isEmpty()) {
+            for (int z=0; listOfAppointmentsFifteenMinutes.size()>z; z++){
+            }
+        }
+
+        return listOfAppointmentsFifteenMinutes;
     }
 
     public void setAllAppointments(Appointments appointments){

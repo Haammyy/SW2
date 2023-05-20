@@ -2,6 +2,7 @@ package controllers;
 import Model.Appointments;
 import Model.Location;
 import helper.AppointmentsQuery;
+import helper.Conversions;
 import helper.CustomersQuery;
 import helper.JDBC;
 import javafx.event.ActionEvent;
@@ -75,11 +76,8 @@ public class HelloController {
             window.setScene(viewScene);
             window.show();
             if (Appointments.checkFifteen()) {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Appointment Approaching soon");
-                alert.setHeaderText("Appointment Alert");
-                alert.setContentText("You have an appointment(s) in less than 15 minutes\n"+Appointments.listOfAppointmentsFifteenMinutes);
-                alert.showAndWait();
+                Conversions.toAlert("You have an appointment in 15 minutes or less.",1);
+                Appointments.getFifteenAppointments();
             }
         }
         else{

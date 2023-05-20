@@ -1,24 +1,199 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="576.0" style="-fx-background-color: #a0a0a0;" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.reportController">
+<AnchorPane prefHeight="685.0" prefWidth="576.0" style="-fx-background-color: #a0a0a0;" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.reportController">
    <children>
-      <TableView layoutX="5.0" layoutY="47.0" prefHeight="90.0" prefWidth="590.0">
-        <columns>
-          <TableColumn prefWidth="75.0" text="Appointment ID" />
-          <TableColumn prefWidth="48.79998779296875" text="C2" />
-            <TableColumn prefWidth="51.199981689453125" text="C2" />
-            <TableColumn prefWidth="84.80000305175781" text="C2" />
-            <TableColumn prefWidth="36.7999267578125" text="C2" />
-            <TableColumn prefWidth="84.79998779296875" text="C2" />
-            <TableColumn minWidth="0.0" prefWidth="58.4000244140625" text="C2" />
-            <TableColumn prefWidth="53.5999755859375" text="C2" />
-            <TableColumn prefWidth="189.60003662109375" text="C2" />
-            <TableColumn prefWidth="75.0" text="C2" />
-        </columns>
-      </TableView>
-      <Button fx:id="cancelButton" layoutX="274.0" layoutY="187.0" mnemonicParsing="false" onAction="#onCancelButtonClick" text="Cancel" />
+      <VBox prefHeight="685.0" prefWidth="576.0">
+         <children>
+            <VBox prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <Label text="By Type:">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets left="15.0" right="15.0" top="15.0" />
+                     </VBox.margin>
+                  </Label>
+                  <TableView fx:id="typeTable" prefHeight="94.0" prefWidth="546.0">
+                    <columns>
+                       <TableColumn fx:id="T1C1" prefWidth="112.80005186796188" text="Appointment ID" />
+                       <TableColumn fx:id="T1C2" prefWidth="39.0" text="Title" />
+                       <TableColumn fx:id="T1C3" prefWidth="81.80001831054688" text="Customer ID " />
+                       <TableColumn fx:id="T1C4" prefWidth="66.40000915527344" text="Contact ID" />
+                       <TableColumn fx:id="T1C5" minWidth="0.0" prefWidth="44.0" text="Desc." />
+                       <TableColumn fx:id="T1C6" prefWidth="53.79998779296875" text="Type" />
+                       <TableColumn fx:id="T1C7" minWidth="0.0" prefWidth="59.399993896484375" text="Start" />
+                       <TableColumn fx:id="T1C8" prefWidth="55.800018310546875" text="End" />
+                    </columns>
+                     <VBox.margin>
+                        <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                     </VBox.margin>
+                  </TableView>
+               </children>
+            </VBox>
+            <VBox prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <HBox prefHeight="32.0" prefWidth="574.0">
+                     <children>
+                        <Label prefHeight="18.0" prefWidth="95.0" text="By Month:">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                           <padding>
+                              <Insets left="20.0" />
+                           </padding>
+                        </Label>
+                        <RadioButton fx:id="radioJan" alignment="TOP_CENTER" contentDisplay="TOP" mnemonicParsing="false" prefHeight="34.0" prefWidth="32.0" selected="true" text="1">
+                           <padding>
+                              <Insets left="3.0" />
+                           </padding>
+                           <toggleGroup>
+                              <ToggleGroup fx:id="radioByMonth" />
+                           </toggleGroup>
+                        </RadioButton>
+                        <RadioButton fx:id="radioFeb" alignment="TOP_CENTER" contentDisplay="TOP" mnemonicParsing="false" text="2" toggleGroup="$radioByMonth">
+                           <padding>
+                              <Insets left="3.0" />
+                           </padding>
+                        </RadioButton>
+                        <RadioButton fx:id="radioMar" alignment="TOP_CENTER" contentDisplay="TOP" mnemonicParsing="false" text="3" toggleGroup="$radioByMonth">
+                           <padding>
+                              <Insets left="3.0" />
+                           </padding>
+                        </RadioButton>
+                        <RadioButton fx:id="radioApr" alignment="TOP_CENTER" contentDisplay="TOP" mnemonicParsing="false" text="4" toggleGroup="$radioByMonth">
+                           <padding>
+                              <Insets left="3.0" />
+                           </padding>
+                        </RadioButton>
+                        <RadioButton fx:id="radioMay" alignment="TOP_CENTER" contentDisplay="TOP" mnemonicParsing="false" text="5" toggleGroup="$radioByMonth">
+                           <padding>
+                              <Insets left="3.0" />
+                           </padding>
+                        </RadioButton>
+                        <RadioButton fx:id="radioJun" mnemonicParsing="false" text="6" toggleGroup="$radioByMonth">
+                           <padding>
+                              <Insets left="3.0" />
+                           </padding>
+                        </RadioButton>
+                        <RadioButton fx:id="radioJul" alignment="TOP_CENTER" contentDisplay="TOP" mnemonicParsing="false" text="7" toggleGroup="$radioByMonth">
+                           <padding>
+                              <Insets left="3.0" />
+                           </padding>
+                        </RadioButton>
+                        <RadioButton fx:id="radioAug" alignment="TOP_CENTER" contentDisplay="TOP" mnemonicParsing="false" text="8" toggleGroup="$radioByMonth">
+                           <padding>
+                              <Insets left="3.0" />
+                           </padding>
+                        </RadioButton>
+                        <RadioButton fx:id="radioSep" alignment="TOP_CENTER" contentDisplay="TOP" mnemonicParsing="false" text="9" toggleGroup="$radioByMonth">
+                           <padding>
+                              <Insets left="3.0" />
+                           </padding>
+                        </RadioButton>
+                        <RadioButton fx:id="radioOct" alignment="TOP_CENTER" contentDisplay="TOP" mnemonicParsing="false" text="10" toggleGroup="$radioByMonth">
+                           <padding>
+                              <Insets left="3.0" />
+                           </padding>
+                        </RadioButton>
+                        <RadioButton fx:id="radioNov" alignment="TOP_CENTER" contentDisplay="TOP" mnemonicParsing="false" text="11" toggleGroup="$radioByMonth">
+                           <padding>
+                              <Insets left="3.0" />
+                           </padding>
+                        </RadioButton>
+                        <RadioButton fx:id="radioDec" alignment="TOP_CENTER" contentDisplay="TOP" mnemonicParsing="false" text="12" toggleGroup="$radioByMonth">
+                           <padding>
+                              <Insets left="3.0" />
+                           </padding>
+                        </RadioButton>
+                     </children>
+                  </HBox>
+                  <TableView fx:id="monthTable" prefHeight="90.0" prefWidth="590.0">
+                     <columns>
+                        <TableColumn fx:id="T2C1" prefWidth="112.80005186796188" text="Appointment ID" />
+                        <TableColumn fx:id="T2C2" prefWidth="36.0" text="Title" />
+                        <TableColumn fx:id="T2C3" prefWidth="81.0" text="Customer ID" />
+                        <TableColumn fx:id="T2C4" prefWidth="68.5999755859375" text="Contact ID" />
+                        <TableColumn fx:id="T2C5" prefWidth="41.4000244140625" text="Desc." />
+                        <TableColumn fx:id="T2C6" prefWidth="45.79998779296875" text="Type" />
+                        <TableColumn fx:id="T2C7" minWidth="0.0" prefWidth="58.4000244140625" text="Start" />
+                        <TableColumn fx:id="T2C8" prefWidth="53.5999755859375" text="End" />
+                     </columns>
+                     <VBox.margin>
+                        <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                     </VBox.margin>
+                  </TableView>
+               </children>
+            </VBox>
+            <VBox prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <Label text="By Contact:">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets left="15.0" right="15.0" top="15.0" />
+                     </VBox.margin>
+                  </Label>
+                  <TableView fx:id="contactTable" prefHeight="90.0" prefWidth="590.0">
+                     <columns>
+                        <TableColumn fx:id="T3C1" prefWidth="112.80005186796188" text="Appointment ID" />
+                        <TableColumn fx:id="T3C2" prefWidth="37.0" text="Title" />
+                        <TableColumn fx:id="T3C3" prefWidth="78.39999389648438" text="Customer ID" />
+                        <TableColumn fx:id="T3C4" prefWidth="71.19998168945312" text="Contact ID" />
+                        <TableColumn fx:id="T3C5" minWidth="0.0" prefWidth="40.20001220703125" text="Desc." />
+                        <TableColumn fx:id="T3C6" prefWidth="45.4000244140625" text="Type" />
+                        <TableColumn fx:id="T3C7" minWidth="0.0" prefWidth="58.4000244140625" text="Start" />
+                        <TableColumn fx:id="T3C8" prefWidth="53.5999755859375" text="End" />
+                     </columns>
+                     <VBox.margin>
+                        <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                     </VBox.margin>
+                  </TableView>
+               </children>
+            </VBox>
+            <VBox prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <Label text="By Ending Soonest:">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets left="15.0" right="15.0" top="15.0" />
+                     </VBox.margin>
+                  </Label>
+                  <TableView fx:id="endingTable" prefHeight="90.0" prefWidth="590.0">
+                     <columns>
+                        <TableColumn fx:id="T4C1" prefWidth="112.80005186796188" text="Appointment ID" />
+                        <TableColumn fx:id="T4C2" prefWidth="37.0" text="Title" />
+                        <TableColumn fx:id="T4C3" prefWidth="78.39999389648438" text="Customer ID" />
+                        <TableColumn fx:id="T4C4" prefWidth="71.19998168945312" text="Contact ID" />
+                        <TableColumn fx:id="T4C5" minWidth="0.0" prefWidth="40.20001220703125" text="Desc." />
+                        <TableColumn fx:id="T4C6" prefWidth="45.4000244140625" text="Type" />
+                        <TableColumn fx:id="T4C7" minWidth="0.0" prefWidth="58.4000244140625" text="Start" />
+                        <TableColumn fx:id="T4C8" prefWidth="53.5999755859375" text="End" />
+                     </columns>
+                     <VBox.margin>
+                        <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                     </VBox.margin>
+                  </TableView>
+               </children>
+            </VBox>
+
+            <Button fx:id="cancelButton" mnemonicParsing="false" onAction="#onCancelButtonClick" prefHeight="26.0" prefWidth="89.0" text="Exit">
+               <VBox.margin>
+                  <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+               </VBox.margin>
+            </Button>
+         </children>
+      </VBox>
    </children>
+   <padding>
+      <Insets top="10.0" />
+   </padding>
 </AnchorPane>

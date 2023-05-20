@@ -63,6 +63,15 @@ public class createAppointmentController {
         LocalDateTime end = LocalDateTime.of(endDatePicker.getValue(), LocalTime.of(parseInt(endHourPicker.getValue()), parseInt(endMinutePicker.getValue()), parseInt(endSecondPicker.getValue())));
 
 
+        //convert the date and time values to UTC using Conversion.toUTC()
+
+        System.out.println("CAV65 - Start before UTC Conversion at : "+ start);
+        System.out.println("CAV66 - End before UTC Conversion at : "+ end);
+        //start = Conversions.toUTC(start);
+        //end = Conversions.toUTC(end);
+        System.out.println("CAV69 - Start after UTC Conversion at : "+ start);
+        System.out.println("CAV70 - End after UTC Conversion at : "+ end);
+
         //if the fields are empty, display an error message and do not save the appointment
         if (customerId.isEmpty() || userId.isEmpty() || title.isEmpty() || description.isEmpty() || location.isEmpty() || contact.isEmpty() || type.isEmpty() || String.valueOf(start).isEmpty() || String.valueOf(end).isEmpty()){
             System.out.println("ERROR: One or more fields are empty");

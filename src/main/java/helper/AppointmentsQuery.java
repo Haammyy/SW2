@@ -27,7 +27,6 @@ public class AppointmentsQuery {
 
     public static boolean createAppointment(String contactName, String title, String description, String location, String type, LocalDateTime start, LocalDateTime end, Integer customerId, Integer userID) throws SQLException{
         Contacts contact = ContactsQuery.getContactId(contactName);
-
         String sql = "INSERT INTO appointments(Title, Description, Location, Type, Start, End, Customer_ID, Contact_ID, User_ID) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";;
 
         //print what should be created as sql statement
@@ -39,8 +38,9 @@ public class AppointmentsQuery {
         ps.setString(2, description);
         ps.setString(3, location);
         ps.setString(4, type);
-        ps.setTimestamp(5, Timestamp.valueOf(start));
-        ps.setTimestamp(6, Timestamp.valueOf(end));
+        System.out.println("AQ43 - TIME TO BE SUBMITTED TO DB: " + Conversions.toUTC(start));
+        ps.setTimestamp(5, Timestamp.valueOf(Conversions.toUTC(start)));
+        ps.setTimestamp(6, Timestamp.valueOf(Conversions.toUTC(end)));
         ps.setInt(7, customerId);
         ps.setInt(8, Contacts.getContactId());
         ps.setInt(9, userID);
@@ -196,6 +196,8 @@ public class AppointmentsQuery {
                                             String location, String type, LocalDateTime start,
                                             LocalDateTime end, int customerId, int userId, int appointmentId) throws SQLException {
        try{
+           System.out.println("start time: " + start);
+           System.out.println("start time in UTC: " + Conversions.toUTC(start));
            String sql =
                    "UPDATE appointments SET Title = ?, " +
                    "Description = ?, " +
@@ -214,8 +216,8 @@ public class AppointmentsQuery {
            ps.setString(3, location);
            ps.setString(4, type);
            //set start and end times
-           ps.setTimestamp(5, Timestamp.valueOf(start));
-           ps.setTimestamp(6, Timestamp.valueOf(end));
+           ps.setTimestamp(5, Timestamp.valueOf(Conversions.toUTC(start)));
+           ps.setTimestamp(6, Timestamp.valueOf(Conversions.toUTC(end)));
            //set the remaining values
            ps.setInt(7, customerId);
            ps.setInt(8, contactID);

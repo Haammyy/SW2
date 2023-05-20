@@ -19,13 +19,16 @@ import javafx.stage.Stage;
 import org.w3c.dom.events.UIEvent;
 
 import java.io.IOException;
+import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.ZonedDateTime;
 
 import static controllers.scheduleViewController.selectedAppointment;
 import static controllers.scheduleViewController.selectedCustomer;
+import static java.lang.Integer.getInteger;
 import static java.lang.Integer.parseInt;
 
 public class modifyAppointmentsController {
@@ -109,6 +112,30 @@ public class modifyAppointmentsController {
         }
     }
     public void initialize() throws SQLException {
+        if (Conversions.toLocal(selectedAppointment.getStartTime()).isAfter(Conversions.toUTC(selectedAppointment.getStartTime()))) {
+            selectedAppointment.getStartDate().plusDays(1);
+            selectedAppointment.getEndDate().plusDays(1);
+            startDatePicker.setValue(selectedAppointment.getStartDate());
+            endDatePicker.setValue(selectedAppointment.getEndDate());
+        }
+        else {
+            startDatePicker.setValue(selectedAppointment.getStartDate());
+            endDatePicker.setValue(selectedAppointment.getEndDate());
+        }
+
+        startHourPicker.setValue(String.valueOf(Conversions.toLocal(selectedAppointment.getStartTime()).getHour()));
+        startMinutePicker.setValue(String.valueOf(Conversions.toLocal(selectedAppointment.getStartTime()).getMinute()));
+        startSecondPicker.setValue(String.valueOf(Conversions.toLocal(selectedAppointment.getStartTime()).getSecond()));
+
+        //set the end time pickers in local time
+        System.out.println("MAC 137 - sAgetTime: " + selectedAppointment.getEndTime().getHour());
+        System.out.println("MAC 138 - toLocal Time: " + Conversions.toLocal(selectedAppointment.getEndTime()).getHour());
+
+
+        endHourPicker.setValue(String.valueOf(Conversions.toLocal(selectedAppointment.getEndTime()).getHour()));
+        endMinutePicker.setValue(String.valueOf(Conversions.toLocal(selectedAppointment.getEndTime()).getMinute()));
+        endSecondPicker.setValue(String.valueOf(Conversions.toLocal(selectedAppointment.getEndTime()).getSecond()));
+
         setContacts();
         //unable to edit:
         customerIdField.setText(String.valueOf(selectedAppointment.getCustomerId()));
@@ -123,20 +150,6 @@ public class modifyAppointmentsController {
         descriptionField.setText(selectedAppointment.getDescription());
         locationField.setText(selectedAppointment.getLocation());
         typeMenu.setValue(selectedAppointment.getType());
-        startDatePicker.setValue(selectedAppointment.getStartDate());
-
-        //set the start time pickers
-        startHourPicker.setValue(String.valueOf(selectedAppointment.getStartTime().getHour()));
-        startMinutePicker.setValue(String.valueOf(selectedAppointment.getStartTime().getMinute()));
-        startSecondPicker.setValue(String.valueOf(selectedAppointment.getStartTime().getSecond()));
-
-        //set the end time pickers
-        endHourPicker.setValue(String.valueOf(selectedAppointment.getEndTime().getHour()));
-        endMinutePicker.setValue(String.valueOf(selectedAppointment.getEndTime().getMinute()));
-        endSecondPicker.setValue(String.valueOf(selectedAppointment.getEndTime().getSecond()));
-
-        //set the end date picker
-        endDatePicker.setValue(selectedAppointment.getEndDate());
 
         //set the contact menu and type menu
         typeMenu.setValue(selectedAppointment.getType());
