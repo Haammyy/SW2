@@ -7,7 +7,7 @@
 
 <AnchorPane prefHeight="685.0" prefWidth="576.0" style="-fx-background-color: #a0a0a0;" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.reportController">
    <children>
-      <VBox prefHeight="685.0" prefWidth="576.0">
+      <VBox fx:id="vboxBind" prefHeight="685.0" prefWidth="576.0">
          <children>
             <VBox prefHeight="200.0" prefWidth="100.0">
                <children>

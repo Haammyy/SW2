@@ -253,7 +253,7 @@ public class scheduleViewController {
         DivisionsQuery divQue = new DivisionsQuery();
         divQue.getDivisions();
 
-        customersTableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        //customersTableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         customerList = Customers.getAllCustomers();
         customersTableView.setItems(customerList);
 
@@ -268,6 +268,7 @@ public class scheduleViewController {
         appointmentsTableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         appointmentList = Appointments.getAllAppointments();
         appointmentsTableView.setItems(appointmentList);
+
 
         appointmentIDColumn.setCellValueFactory(new PropertyValueFactory<>("Appointment_ID"));
         descriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));

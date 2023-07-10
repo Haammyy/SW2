@@ -65,17 +65,37 @@ public class createAppointmentController {
 
         //convert the date and time values to UTC using Conversion.toUTC()
 
-        System.out.println("CAV65 - Start before UTC Conversion at : "+ start);
-        System.out.println("CAV66 - End before UTC Conversion at : "+ end);
-        //start = Conversions.toUTC(start);
-        //end = Conversions.toUTC(end);
-        System.out.println("CAV69 - Start after UTC Conversion at : "+ start);
-        System.out.println("CAV70 - End after UTC Conversion at : "+ end);
+//        System.out.println("CAV65 - Start before UTC Conversion at : "+ start);
+//        System.out.println("CAV66 - End before UTC Conversion at : "+ end);
+//        //start = Conversions.toUTC(start);
+//        //end = Conversions.toUTC(end);
+//        System.out.println("CAV69 - Start after UTC Conversion at : "+ start);
+//        System.out.println("CAV70 - End after UTC Conversion at : "+ end);
+//
+        System.out.println(parseInt(startHourPicker.getValue()));
+
+        System.out.println(parseInt(endHourPicker.getValue()));
+
 
         //if the fields are empty, display an error message and do not save the appointment
         if (customerId.isEmpty() || userId.isEmpty() || title.isEmpty() || description.isEmpty() || location.isEmpty() || contact.isEmpty() || type.isEmpty() || String.valueOf(start).isEmpty() || String.valueOf(end).isEmpty()){
             System.out.println("ERROR: One or more fields are empty");
             Conversions.toAlert("One or more fields are empty");
+            throw new RuntimeException();
+        }
+        else if((parseInt(startHourPicker.getValue())>22 || parseInt(startHourPicker.getValue())<8)){
+            System.out.println("ERROR: Meeting is out of work hour");
+            Conversions.toAlert("Meeting is not within work hours (8am-10pm)");
+            throw new RuntimeException();
+        }
+        else if ((parseInt(endHourPicker.getValue()) > 22 || parseInt(endHourPicker.getValue()) <8) ){
+            System.out.println("ERROR: Meeting is out of work hour");
+            Conversions.toAlert("Meeting is not within work hours (8am-10pm)");
+            throw new RuntimeException();
+        }
+        else if(Conversions.isCustomerOverlap(selectedCustomer)){
+            System.out.println("ERROR: Meeting is out of work hour");
+            Conversions.toAlert("Meeting is not within work hours (8am-10pm)");
             throw new RuntimeException();
         }
         else {

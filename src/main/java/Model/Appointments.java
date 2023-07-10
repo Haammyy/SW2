@@ -64,6 +64,7 @@ public class        Appointments {
         Conversions.toAlert("No appointments within 15 minutes");
         return false;
     }
+
     public static ObservableList<String> getFifteenAppointments() {
         //
         if (!listOfAppointmentsFifteenMinutes.isEmpty()) {

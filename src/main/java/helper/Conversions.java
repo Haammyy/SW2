@@ -1,5 +1,6 @@
 package helper;
 
+import Model.Customers;
 import javafx.scene.control.Alert;
 
 import java.time.*;
@@ -41,7 +42,6 @@ public abstract class Conversions {
         return alert;
     }
     public static Alert toAlert (String alertText, int alertType) {
-        //three different alert types, all converting a string to an alert
         // 0 = warning
         // 1 = information
         // 2 = error
@@ -65,6 +65,10 @@ public abstract class Conversions {
     }
 
 
-
-
+    public static boolean isCustomerOverlap(Customers selectedCustomer) {
+            if(selectedCustomer.hasAppointment(selectedCustomer.getCustomerId())){
+                return true;
+            }
+            return false;
+    }
 }

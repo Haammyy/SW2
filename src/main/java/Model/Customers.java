@@ -114,4 +114,11 @@ public class Customers {
     public static ObservableList<Customers> getAllCustomers(){
         return allCustomers;
     }
+
+    public boolean hasAppointment(int customerId) {
+        Customers currCust = (Customers) allCustomers.get(customerId);
+
+        return false;
+
+    }
 }
