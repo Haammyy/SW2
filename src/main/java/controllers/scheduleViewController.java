@@ -21,6 +21,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 
+import static helper.AppointmentsQuery.getAppointmentsByType;
 import static java.lang.Integer.parseInt;
 public class scheduleViewController {
     //BUTTONS
@@ -73,7 +74,6 @@ public class scheduleViewController {
      * Go to the reports stack pane
      */
     public void reportsButtonClicked(ActionEvent event) throws IOException{
-
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/reportView.fxml"));
         Parent viewParent = loader.load();
         Scene viewScene = new Scene(viewParent);
@@ -205,7 +205,8 @@ public class scheduleViewController {
             appointmentsTableView.setItems(appointmentList);
         }
     }
-    public void reportsClicked(ActionEvent event) throws IOException{
+    public void reportsClicked(ActionEvent event) throws IOException, SQLException {
+        AppointmentsQuery.getAppointmentsByType();
         System.out.println("reports clicked");
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/reportView.fxml"));
         Parent viewParent = loader.load();

@@ -2,28 +2,36 @@ package controllers;
 
 import Model.Appointments;
 import Model.Customers;
+import helper.AppointmentsQuery;
 import helper.NavigationUtil;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Window;
 
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 public class reportController {
     //APPOINTMENTS REPORTS TABLE
-    @FXML public TableView<Appointments> typeTable, monthTable, contactTable, endingTable;
+    @FXML public TableView<Appointments> typeTable;
+
+    @FXML
+    TextArea monthText;
 
     public VBox vboxBind;
+
+
+    ObservableList appointmentList = FXCollections.observableArrayList();
+
     @FXML public TableColumn<Appointments, String> titleColumn, descriptionColumn, locationColumn, typeColumn;
     @FXML public TableColumn<Appointments, LocalDateTime> startColumn, endColumn;
     @FXML
@@ -35,42 +43,41 @@ public class reportController {
 
 
     @FXML
-    static RadioButton radioJan, radioFeb, radioMar, radioApr, radioMay, radioJun, radioJul, radioAug, radioSep, radioOct, radioNov, radioDec;
-   //String radioJanS = ""
+    public RadioButton radioJan, radioFeb, radioMar, radioApr, radioMay, radioJun, radioJul, radioAug, radioSep, radioOct, radioNov, radioDec;
     @FXML
     Button cancelButton;
+
     public void onCancelButtonClick(ActionEvent event) {
         NavigationUtil.navigateToHomePage(event);
     }
 
-    public void setTables(){
+    public void setTables() throws SQLException {
         typeTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         typeTable.prefWidthProperty().bind(vboxBind.widthProperty());
         typeTable.prefHeightProperty().bind(vboxBind.heightProperty());
-        monthTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-        contactTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-        endingTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-
         setTypeTable();
-        setMonthTable();
         setContactTable();
         setEndingTable();
 
     }
 
-    public static void setTypeTable(){
 
-    }
-    public static void setMonthTable(){
-        List<RadioButton> radioButtons = new ArrayList<>();  // Your list of radio buttons
+    public void setTypeTable() throws SQLException {
 
-        for (RadioButton radioButton : radioButtons) {
-            if (radioButton.isSelected()) {
-                //methodToExecute();  // Call your method here
-                break;  // Exit the loop if a radio button is selected
-            }
-        }
+        typeTable.getItems().clear();
+        appointmentList = Appointments.getAllAppointmentsType();
+        System.out.println(appointmentList);
 
+        T1C1.setCellValueFactory(new PropertyValueFactory<>("Appointment_ID"));
+        T1C2.setCellValueFactory(new PropertyValueFactory<>("title"));
+        T1C3.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+        T1C5.setCellValueFactory(new PropertyValueFactory<>("description"));
+        T1C6.setCellValueFactory(new PropertyValueFactory<>("type"));
+        T1C7.setCellValueFactory(new PropertyValueFactory<>("startDate"));
+        T1C8.setCellValueFactory(new PropertyValueFactory<>("endDate"));
+        //contactIDColumn.setCellValueFactory(new PropertyValueFactory<>("contactId"));
+        T1C4.setCellValueFactory(new PropertyValueFactory<>("userId"));
+        typeTable.setItems(appointmentList);
 
     }
     public static void setContactTable(){
@@ -80,8 +87,64 @@ public class reportController {
     public static void setEndingTable(){
 
     }
-
-    public void initialize(){
+    String month;
+    public void initialize() throws SQLException {
+        month = "";
+        radioJan.setSelected(false);
+        radioFeb.setSelected(false);
+        radioMar.setSelected(false);
+        radioApr.setSelected(false);
+        radioMay.setSelected(false);
+        radioJun.setSelected(false);
+        radioJul.setSelected(false);
+        radioAug.setSelected(false);
+        radioSep.setSelected(false);
+        radioOct.setSelected(false);
+        radioNov.setSelected(false);
+        radioDec.setSelected(false);
+        monthText.setText("");
         setTables();
+    }
+    public void checkMonthSelectedClicked(ActionEvent actionEvent) throws SQLException {
+        //set month to the currently selected radio button in the group
+        monthText.setText("");
+        month = "";
+        if (radioJan.isSelected()) {
+            month = "January";
+        } else if (radioFeb.isSelected()) {
+            month = "February";
+        } else if (radioMar.isSelected()) {
+            month = "March";
+        } else if (radioApr.isSelected()) {
+            month = "April";
+        } else if (radioMay.isSelected()) {
+            month = "May";
+        } else if (radioJun.isSelected()) {
+            month = "June";
+        } else if (radioJul.isSelected()) {
+            month = "July";
+        } else if (radioAug.isSelected()) {
+            month = "August";
+        } else if (radioSep.isSelected()) {
+            month = "September";
+        } else if (radioOct.isSelected()) {
+            month = "October";
+        } else if (radioNov.isSelected()) {
+            month = "November";
+        } else if (radioDec.isSelected()) {
+            month = "December";
+        }
+        if (month.equals("")) {
+            return;
+        } else {
+            int count = 0;
+            //if a month is selected, display the number of appointments in that month
+            monthText.setText("There are " + AppointmentsQuery.getMonthlyAppointments(month) + " appointments in " + month.toLowerCase() + "."
+                    + "\nDe-Briefing: " + AppointmentsQuery.returnNumOfAppointmentsByTypeAndMonth(month,"De-Briefing")
+                    + "\nPlanning Session: "+ AppointmentsQuery.returnNumOfAppointmentsByTypeAndMonth(month,"Planning Session")
+                    + "\nFollow-Up: "+ AppointmentsQuery.returnNumOfAppointmentsByTypeAndMonth(month,"Follow-Up")
+                    + "\nPre-Briefing: "+ AppointmentsQuery.returnNumOfAppointmentsByTypeAndMonth(month,"Pre-Briefing")
+                    + "\nOpen Session: "+ AppointmentsQuery.returnNumOfAppointmentsByTypeAndMonth(month,"Open Session"));
+        }
     }
 }

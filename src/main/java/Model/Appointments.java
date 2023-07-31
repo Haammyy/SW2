@@ -1,22 +1,19 @@
 package Model;
 
-import helper.ContactsQuery;
 import helper.Conversions;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableArray;
 import javafx.collections.ObservableList;
-import javafx.scene.control.Alert;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.OffsetDateTime;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class        Appointments {
     public static ObservableList listOfAppointmentsFifteenMinutes = FXCollections.observableArrayList();
     public static ObservableList<Appointments> allAppointments = FXCollections.observableArrayList();
+    public static ObservableList<Appointments> allByTypeAppointments = FXCollections.observableArrayList();
     private int Appointment_ID,customerId,userId,contactId;
     private String title,description,location,type,contactName;
     private LocalDate startDate,endDate;
@@ -75,14 +72,49 @@ public class        Appointments {
         return listOfAppointmentsFifteenMinutes;
     }
 
+    public static int getAllAppointmentsMonth(String month) {
+        //return the number of appointments in a given month
+        int count = 0;
+        for (int a = 0; a < allAppointments.size(); a++) {
+            if (allAppointments.get(a).getStartDate().getMonth().toString().equals(month)) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    public List<Appointments> getAppointmentsByType(String type) {
+        List<Appointments> filteredAppointments = allAppointments.stream()
+                .filter(appointment -> appointment.getType().equals(type))
+                .collect(Collectors.toList());
+
+        return filteredAppointments;
+    }
+    public static ObservableList<Appointments> groupByType() throws SQLException {
+        return allByTypeAppointments;
+    }
+    static ObservableList<Appointments> tempAp = allAppointments;
+    public void setTempAp(){
+        tempAp = allAppointments;
+    }
+
+
+
     public void setAllAppointments(Appointments appointments){
         allAppointments.add(appointments);
+    }
+    public void setAllAppointmentsType(Appointments appointments){
+        allByTypeAppointments.add(appointments);
     }
 
 
     public static ObservableList<Appointments> getAllAppointments(){
         return allAppointments;
     }
+    public static ObservableList<Appointments> getAllAppointmentsType(){
+        return allByTypeAppointments;
+    }
+
 
     public int getAppointment_ID() {
         return Appointment_ID;
